@@ -1,0 +1,98 @@
+<editor>
+<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-azuredevops#UploadWorkItemAttachment</help>
+<formElement>
+  <documentation>Previously defined plugin configuration.</documentation>
+  <label>Configuration:</label>
+  <property>config</property>
+  <configuration>1</configuration>
+  <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+  <required>1</required>
+  <type>entry</type>
+</formElement>
+<formElement>
+  <documentation>ID of the work item.</documentation>
+  <label>Work Item ID:</label>
+  <property>workItemId</property>
+  <required>1</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <htmlDocumentation>The name of the file in the Attachment store. <br/>For example the uploaded file /var/tmp/foobar.txt as in File Path could be called as Information.txt in the Attachment store.</htmlDocumentation>
+  <label>Attachment Filename:</label>
+  <property>filename</property>
+  <required>1</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <htmlDocumentation>Absolute Path to the file to be uploaded. For example /var/tmp/info.txt <br/>Either this parameter or the "File Content" parameter is Required.</htmlDocumentation>
+  <label>File Path:</label>
+  <property>filePath</property>
+  <required>0</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <htmlDocumentation>Enter the File content to be uploaded in this text area up to a limit of 64KB. <br/>Either this parameter or the "File Path" parameter is Required.</htmlDocumentation>
+  <label>File Content:</label>
+  <property>fileContent</property>
+  <required>0</required>
+  <type>textarea</type>
+  <value/>
+</formElement>
+<formElement>
+  <documentation>Comment for the attachment.</documentation>
+  <label>Comment:</label>
+  <property>attachmentComment</property>
+  <required>0</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <documentation>Use chunked upload type for uploading large files (&gt;130 MB).</documentation>
+  <label>Upload Type:</label>
+  <option>
+    <name>Simple</name>
+    <value>simple</value>
+  </option>
+  <option>
+    <name>Chunked</name>
+    <value>chunked</value>
+  </option>
+  <property>uploadType</property>
+  <required>1</required>
+  <type>select</type>
+  <value>simple</value>
+</formElement>
+<formElement>
+  <documentation>Format to save the request results.</documentation>
+  <label>Result Format:</label>
+  <option>
+    <name>Property Sheet</name>
+    <value>propertySheet</value>
+  </option>
+  <option>
+    <name>JSON</name>
+    <value>json</value>
+  </option>
+  <option>
+    <name>Do not save the result</name>
+    <value>none</value>
+  </option>
+  <property>resultFormat</property>
+  <value>propertySheet</value>
+  <required>1</required>
+  <type>select</type>
+</formElement>
+<formElement>
+  <documentation>Result will be saved into this property/property sheet.</documentation>
+  <label>Result Property Sheet:</label>
+  <property>resultPropertySheet</property>
+  <required>0</required>
+  <type>entry</type>
+  <value>/myJob/workItemAttachment</value>
+  <dependsOn>resultFormat</dependsOn>
+  <condition>${resultFormat} != 'none'</condition>
+</formElement>
+</editor>

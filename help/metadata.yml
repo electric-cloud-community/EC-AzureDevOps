@@ -1,0 +1,33 @@
+overview: Should be replaced with 'overview.md'
+knownIssues: |
+  AzureDevOps Services and some of the TFS Servers (default depends of the version), does not accept clear password for the **Basic** authentication method. You should [create a Personal Access Token (PAT)](https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/pats?view=azdevops) and use it instead of a password.<br/>
+  Uploading Attachments in the "Chunked" mode when using NTLM authentication via proxied connection may fail if proxy server closes connection after a POST request without a response content.
+
+proceduresGrouping:
+  groups:
+    - name: Work Item Management
+      description: Get, create, delete, search and update bugs, tasks, and other work items for your team.
+      procedures:
+        - CreateWorkItems
+        - QueryWorkItems
+        - GetWorkItems
+        - UpdateWorkItems
+        - DeleteWorkItems
+        - UploadWorkItemAttachment
+        - GetDefaultValues
+    - name: Build Management
+      description: Provides methods for the build management.
+      procedures:
+        - TriggerBuild
+        - GetBuild
+
+proceduresPreface: |
+  <b>IMPORTANT</b> Note that the names of Required parameters are marked in <span class="required">bold italics</span> in the parameter description table for each procedure.<br/>
+
+chapters:
+  - name: 'Supported Versions'
+    file: supportedVersionsChapter.md
+    place: 'after overview'
+  - name: 'AzureDevOps Native Extension Plugin'
+    file: electricFlowExtensionChapter.md
+    place: 'after known_issues'

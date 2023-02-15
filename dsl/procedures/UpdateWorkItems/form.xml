@@ -1,0 +1,99 @@
+<editor>
+<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-azuredevops#UpdateWorkItems</help>
+<formElement>
+  <documentation>Previously defined plugin configuration.</documentation>
+  <label>Configuration:</label>
+  <property>config</property>
+  <configuration>1</configuration>
+  <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+  <required>1</required>
+  <type>entry</type>
+</formElement>
+<formElement>
+  <documentation>ID(s) of the work items to be updated.</documentation>
+  <label>Work Item ID(s):</label>
+  <property>workItemIds</property>
+  <required>1</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <documentation>New title for the work item(s) to be updated.</documentation>
+  <label>Title:</label>
+  <property>title</property>
+  <required>0</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <htmlDocumentation>New priority for the work item(s) to be updated. <br/>Priority refers to completing the work item, based on business goals. This field should contain a number.</htmlDocumentation>
+  <label>Priority:</label>
+  <property>priority</property>
+  <required>0</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <htmlDocumentation>The new person to be assigned for the work item(s) to be updated. <br/> The value can contain an email or a fully specified name of an assignee.</htmlDocumentation>
+  <label>Assign to:</label>
+  <property>assignTo</property>
+  <required>0</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <documentation>New description for the work item. Will be rendered as HTML in the AzureDevOps/TFS UI.</documentation>
+  <label>Description:</label>
+  <property>description</property>
+  <required>0</required>
+  <type>textarea</type>
+  <value/>
+</formElement>
+<formElement>
+  <documentation>Comment with given text will be added to the work item(s).</documentation>
+  <label>Comment Body:</label>
+  <property>commentBody</property>
+  <required>0</required>
+  <type>textarea</type>
+  <value/>
+</formElement>
+<formElement>
+  <htmlDocumentation>Additional fields to be added as a JSON array. This an advanced usage field, please refer to the "Usage Example" at the procedure's help or the <a href="https://docs.microsoft.com/uk-ua/rest/api/azure/devops/wit/work%20items/update?view=azure-devops-rest-4.1#examples" target="_blank">Azure DevOps documentation</a> for the examples.</htmlDocumentation>
+  <label>Additional Fields:</label>
+  <property>additionalFields</property>
+  <required>0</required>
+  <type>textarea</type>
+  <value/>
+</formElement>
+<formElement>
+  <documentation>Format to save the request results.</documentation>
+  <label>Result Format:</label>
+  <option>
+    <name>Property Sheet</name>
+    <value>propertySheet</value>
+  </option>
+  <option>
+    <name>JSON</name>
+    <value>json</value>
+  </option>
+  <option>
+    <name>Do not save the result</name>
+    <value>none</value>
+  </option>
+  <property>resultFormat</property>
+  <value>propertySheet</value>
+  <required>1</required>
+  <type>select</type>
+</formElement>
+<formElement>
+  <documentation>Updated items will be saved into this property/property sheet.</documentation>
+  <label>Result Property Sheet:</label>
+  <property>resultPropertySheet</property>
+  <required>0</required>
+  <type>entry</type>
+  <value>/myJob/updatedWorkItems</value>
+  <dependsOn>resultFormat</dependsOn>
+  <condition>${resultFormat} != 'none'</condition>
+</formElement>
+
+</editor>

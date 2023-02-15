@@ -1,0 +1,93 @@
+<editor>
+<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-azuredevops#GetWorkItems</help>
+<formElement>
+  <documentation>Previously defined plugin configuration.</documentation>
+  <label>Configuration:</label>
+  <property>config</property>
+  <configuration>1</configuration>
+  <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+  <required>1</required>
+  <type>entry</type>
+</formElement>
+<formElement>
+  <documentation>A comma-separated list of up to 200 Work Item IDs.</documentation>
+  <label>Work Item IDs:</label>
+  <property>workItemIds</property>
+  <required>1</required>
+  <type>textarea</type>
+  <value/>
+</formElement>
+<formElement>
+  <htmlDocumentation>Specify comma-separated list of fields (as per example below) that need to be retrieved per work item. <br/>
+    If this parameter is left empty all fields will be returned. <br/>
+    Example: <b>'System.State, System.IterationPath, Microsoft.VSTS.Common.StateChangeDate, Microsoft.VSTS.Common.Priority'</b>. Refer to <a href="#">https://dev.azure.com/{yourOrganizationName}/_apis/wit/fields</a> to see all the available fields. <br/>
+    This parameter cannot be specified with the "Expand Relationships" parameter.
+  </htmlDocumentation>
+  <label>Only Fields:</label>
+  <property>fields</property>
+  <required>0</required>
+  <type>textarea</type>
+  <value/>
+</formElement>
+<formElement>
+  <htmlDocumentation>UTC date time string (<i>2019-01-15T13:45:30</i>). Gets the work items as they existed at this time.</htmlDocumentation>
+  <label>As of (date):</label>
+  <property>asOf</property>
+  <required>0</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <htmlDocumentation>Gets work item relationships (work item links, hyperlinks, file attachements, etc.). This parameter cannot be specified with the <b>"Only Fields"</b>.<br/><b>Some of the types were introduced in newer TFS APIs.</b></htmlDocumentation>
+  <label>Expand Relationships:</label>
+  <option>
+    <name>All</name>
+    <value>all</value>
+  </option>
+  <option>
+    <name>Relations</name>
+    <value>relations</value>
+  </option>
+  <option>
+    <name>Fields</name>
+    <value>fields</value>
+  </option>
+  <option>
+    <name>Links</name>
+    <value>links</value>
+  </option>
+  <option>
+    <name>None</name>
+    <value>none</value>
+  </option>
+  <property>expandRelations</property>
+  <required>0</required>
+  <type>select</type>
+  <value>none</value>
+</formElement>
+<formElement>
+  <documentation>Results will be saved into this property/property sheet.</documentation>
+  <label>Result Property Sheet:</label>
+  <property>resultPropertySheet</property>
+  <required>1</required>
+  <type>entry</type>
+  <value>/myJob/workItemsList</value>
+</formElement>
+<formElement>
+  <documentation>Format to save the request results.</documentation>
+  <label>Result Format:</label>
+  <option>
+    <name>Property Sheet</name>
+    <value>propertySheet</value>
+  </option>
+  <option>
+    <name>JSON</name>
+    <value>json</value>
+  </option>
+  <property>resultFormat</property>
+  <value>propertySheet</value>
+  <required>1</required>
+  <type>select</type>
+</formElement>
+
+</editor>

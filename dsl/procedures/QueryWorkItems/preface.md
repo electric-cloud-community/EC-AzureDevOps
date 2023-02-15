@@ -1,0 +1,1 @@
+The fields retrieved for each Work Item is based either on the fields contained in the definition of either the Query ID or the WIQL as the case may be.

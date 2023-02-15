@@ -1,0 +1,137 @@
+<editor>
+  <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-azuredevops#CreateWorkItems</help>
+  <formElement>
+    <documentation>Previously defined plugin configuration.</documentation>
+    <label>Configuration:</label>
+    <property>config</property>
+    <configuration>1</configuration>
+    <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+    <required>1</required>
+    <type>entry</type>
+  </formElement>
+  <formElement>
+    <documentation>Short description of the work item.</documentation>
+    <label>Title:</label>
+    <property>title</property>
+    <required>1</required>
+    <type>entry</type>
+    <value/>
+  </formElement>
+  <formElement>
+    <documentation>Name or ID of a team project where the work item should be created.</documentation>
+    <htmlDocumentation>Name or ID of a <a href="https://docs.microsoft.com/uk-ua/rest/api/azure/devops/wit/?view=azure-devops-rest-4.1" target="_blank">team project</a> where the work item should be created.
+    </htmlDocumentation>
+    <label>Project name:</label>
+    <property>project</property>
+    <required>1</required>
+    <type>entry</type>
+    <value/>
+  </formElement>
+  <formElement>
+    <documentation>Name of the work item type.</documentation>
+    <htmlDocumentation>Name of the <a href="https://docs.microsoft.com/uk-ua/rest/api/azure/devops/wit/?view=azure-devops-rest-4.1" target="_blank">work item type</a>.</htmlDocumentation>
+    <label>Type:</label>
+    <property>type</property>
+    <required>1</required>
+    <type>select</type>
+    <option><name>Bug</name><value>Bug</value></option>
+    <option><name>Task</name><value>Task</value></option>
+    <option><name>Epic</name><value>Epic</value></option>
+    <option><name>Feature</name><value>Feature</value></option>
+    <option><name>Issue</name><value>Issue</value></option>
+    <option><name>User Story</name><value>User Story</value></option>
+    <value>Bug</value>
+  </formElement>
+  <formElement>
+    <documentation>Priority for completing the work item, based on business goals. Parameter should contain a number</documentation>
+    <label>Priority:</label>
+    <property>priority</property>
+    <required>0</required>
+    <type>entry</type>
+    <value/>
+  </formElement>
+  <formElement>
+    <documentation>The person currently assigned to the work item. The value can contain an email or a fully specified name of an assignee</documentation>
+    <label>Assign To:</label>
+    <property>assignTo</property>
+    <required>0</required>
+    <type>entry</type>
+    <value/>
+  </formElement>
+  <formElement>
+    <documentation>Description for the work item. Will be rendered as HTML in the AzureDevOps/TFS UI. This field will not be shown in the TFS UI if the work item type is 'Bug'.</documentation>
+    <label>Description:</label>
+    <property>description</property>
+    <required>0</required>
+    <type>textarea</type>
+    <value/>
+    <dependsOn>type</dependsOn>
+    <condition>${type} != 'Bug'</condition>
+  </formElement>
+  <formElement>
+    <documentation>Steps to reproduce the bug. Will be rendered as HTML in the AzureDevOps/TFS UI. This field will not be shown in the TFS UI unless the work item type is 'Bug'.</documentation>
+    <label>Repro Steps:</label>
+    <property>reproSteps</property>
+    <required>0</required>
+    <type>textarea</type>
+    <value/>
+    <dependsOn>type</dependsOn>
+    <condition>${type} == 'Bug'</condition>
+  </formElement>
+  <formElement>
+    <documentation>Environment information for the created bug. Will be rendered as HTML in the AzureDevOps/TFS UI. This field will not be shown in the TFS UI unless the work item type is 'Bug'.</documentation>
+    <label>System Info:</label>
+    <property>systemInfo</property>
+    <required>0</required>
+    <type>textarea</type>
+    <value/>
+    <dependsOn>type</dependsOn>
+    <condition>${type} == 'Bug'</condition>
+  </formElement>
+  <formElement>
+    <htmlDocumentation>Use this parameter if you need to create multiple work items and use the JSON convention to enter their information, like in this example. <br/><br/><b>[{"Title": "Title for the first work item", "Type": "Task", "Priority": 2}, {"Title": "Title for the second work item", "Priority": 2}]</b> </htmlDocumentation>
+    <label>Work Items JSON:</label>
+    <property>workItemsJSON</property>
+    <required>0</required>
+    <type>textarea</type>
+    <value/>
+  </formElement>
+  <formElement>
+    <htmlDocumentation>Use this parameter to specify values beyond the named parameters. This an advanced usage field, please refer to the "Usage Example" below or the <a href="https://docs.microsoft.com/uk-ua/rest/api/azure/devops/wit/work%20items/update?view=azure-devops-rest-4.1#examples">Azure DevOps documentation.</a></htmlDocumentation>
+    <label>Additional Fields:</label>
+    <property>additionalFields</property>
+    <required>0</required>
+    <type>textarea</type>
+    <value/>
+  </formElement>
+  <formElement>
+    <documentation>Format to save the request results.</documentation>
+    <label>Result Format:</label>
+    <option>
+      <name>Property Sheet</name>
+      <value>propertySheet</value>
+    </option>
+    <option>
+      <name>JSON</name>
+      <value>json</value>
+    </option>
+    <option>
+      <name>Do not save the result</name>
+      <value>none</value>
+    </option>
+    <property>resultFormat</property>
+    <value>propertySheet</value>
+    <required>1</required>
+    <type>select</type>
+  </formElement>
+  <formElement>
+    <documentation>Results will be saved into this property/property sheet. Property 'workItemIds' under the result property sheet will contain IDs for the created work items.</documentation>
+    <label>Result Property Sheet:</label>
+    <property>resultPropertySheet</property>
+    <required>0</required>
+    <type>entry</type>
+    <value>/myJob/newWorkItems</value>
+    <dependsOn>resultFormat</dependsOn>
+    <condition>${resultFormat} != 'none'</condition>
+  </formElement>
+</editor>

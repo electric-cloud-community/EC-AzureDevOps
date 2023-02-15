@@ -1,0 +1,1 @@
+In order to facilitate creation of multiple Work Items the parameters Work Items JSON is provided to specify Multiple Work items. 

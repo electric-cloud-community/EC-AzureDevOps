@@ -1,0 +1,80 @@
+<editor>
+<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-azuredevops#GetBuild</help>
+<formElement>
+    <documentation>Previously defined plugin configuration.</documentation>
+    <label>Configuration:</label>
+    <!-- Improvements for CEV-18687 -->
+    <configuration>1</configuration>
+    <!-- End of improvements for CEV-18687 -->
+    <property>config</property>
+    <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+    <required>1</required>
+    <type>entry</type>
+</formElement>
+<formElement>
+    <documentation>ID or name of the team project.</documentation>
+    <label>Project:</label>
+    <property>project</property>
+    <required>1</required>
+    <type>entry</type>
+    <value/>
+</formElement>
+<formElement>
+    <htmlDocumentation>ID or number of the build. For example '20190110.1' or '26' <br/>You could specify the wild-card pattern 2019* to get the latest build that starts with 2019.</htmlDocumentation>
+    <label>Build ID or Number:</label>
+    <property>buildId</property>
+    <required>1</required>
+    <type>entry</type>
+    <value/>
+</formElement>
+<formElement>
+    <documentation>Name for the Build Definition. This parameter is required if you've specified Build number in a "Build Id or Number" parameter as it is used for the Build search.</documentation>
+    <label>Build Definition Name:</label>
+    <property>buildDefinitionName</property>
+    <required>0</required>
+    <type>entry</type>
+    <value/>
+</formElement>
+<formElement>
+    <checkedValue>1</checkedValue>
+    <documentation>If checked, the procedure will wait until the build is finished or until the wait time exceeds the value specified in the Wait Timeout, whichever is earlier.</documentation>
+    <label>Wait for Build:</label>
+    <property>waitForBuild</property>
+    <required>0</required>
+    <type>checkbox</type>
+    <uncheckedValue>0</uncheckedValue>
+    <value>1</value>
+</formElement>
+<formElement>
+    <documentation>Timeout in seconds to wait for build to finish. Will be used if "Wait for build" is checked. Default waiting time is 300 secs.</documentation>
+    <label>Wait Timeout:</label>
+    <property>waitTimeout</property>
+    <required>0</required>
+    <type>entry</type>
+    <value>300</value>
+</formElement>
+<formElement>
+<documentation>Format to save the request results.</documentation>
+<label>Result Format:</label>
+<option>
+    <name>Property Sheet</name>
+    <value>propertySheet</value>
+</option>
+<option>
+    <name>JSON</name>
+    <value>json</value>
+</option>
+<property>resultFormat</property>
+<required>1</required>
+<value>propertySheet</value>
+<type>select</type>
+</formElement>
+<formElement>
+    <documentation>Results will be saved into this property/property sheet.</documentation>
+    <label>Result Property Sheet:</label>
+    <property>resultPropertySheet</property>
+    <required>1</required>
+    <type>entry</type>
+    <value>/myJob/build</value>
+</formElement>
+</editor>

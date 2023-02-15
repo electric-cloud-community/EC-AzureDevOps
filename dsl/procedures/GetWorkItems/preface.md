@@ -1,0 +1,2 @@
+The fields per work item are returned based on a specified list. This procedure allows you to retrieve the specified fields per work item (or all if no field is specified).
+You can also specify <b>As of (date)</b> parameter as a UTC date time string (<i>2019-01-15T13:45:30</i>) to get all work items as they existed at that time.

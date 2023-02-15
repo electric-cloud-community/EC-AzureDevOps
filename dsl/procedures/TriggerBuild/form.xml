@@ -1,0 +1,87 @@
+<editor>
+<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-azuredevops#TriggerBuild</help>
+<formElement>
+  <documentation>Previously defined plugin configuration.</documentation>
+  <label>Configuration:</label>
+  <property>config</property>
+  <configuration>1</configuration>
+  <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+  <required>1</required>
+  <type>entry</type>
+</formElement>
+<formElement>
+  <documentation>Team project ID or name.</documentation>
+  <label>Project:</label>
+  <property>project</property>
+  <required>1</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <documentation>The ID or the name of the Build Definition.</documentation>
+  <label>Definition ID or name:</label>
+  <property>definitionId</property>
+  <required>1</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <documentation>The ID or the name of the queue. If not specified, the default queue for the definition will be used.</documentation>
+  <label>Queue ID or Name:</label>
+  <property>queueId</property>
+  <required>0</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <htmlDocumentation>The name of the branch from which to build. <br/>If not specified, the default branch for the definition will be used.</htmlDocumentation>
+  <label>Source branch:</label>
+  <property>sourceBranch</property>
+  <required>0</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <htmlDocumentation>Parameters to pass to the build specified as name-value pairs, with 1 pair per line. <br/>If not specified, the default variables for the definition will be used. <br/>Example: <br/>
+    <b>system.debug=true</b> <br/>
+    <b>BuildConfiguration=debug</b> <br/>
+    <b>BuildPlatform=x64</b>
+  </htmlDocumentation>
+  <label>Parameters:</label>
+  <property>parameters</property>
+  <required>0</required>
+  <type>textarea</type>
+  <value/>
+  <collection>1</collection>
+  <collectionName>Parameter name</collectionName>
+  <collectionValue>Parameter value</collectionValue>
+  <collectionValueRequired>1</collectionValueRequired>
+  <collectionEntrySeparator>;#;#;#</collectionEntrySeparator>
+  <collectionValueSeparator>=</collectionValueSeparator>
+</formElement>
+<formElement>
+  <documentation>Results will be saved into this property/property sheet.</documentation>
+  <label>Result Property Sheet:</label>
+  <property>resultPropertySheet</property>
+  <required>1</required>
+  <type>entry</type>
+  <value>/myJob/queueBuild</value>
+</formElement>
+<formElement>
+  <documentation>Format to save the request results.</documentation>
+  <label>Result Format:</label>
+  <option>
+    <name>Property Sheet</name>
+    <value>propertySheet</value>
+  </option>
+  <option>
+    <name>JSON</name>
+    <value>json</value>
+  </option>
+  <property>resultFormat</property>
+  <value>propertySheet</value>
+  <required>1</required>
+  <type>select</type>
+</formElement>
+
+</editor>

@@ -1,0 +1,18 @@
+<plugin>
+  <key>EC-AzureDevOps</key>
+  <label>EC-AzureDevOps</label>
+  <version>1.0.6</version>
+  <author>CloudBees</author>
+  <authorUrl>http://www.electric-cloud.com/support</authorUrl>
+  <category>Application Lifecycle</category>
+  <commander-version min="8.3" />
+  <description>Integration for the Azure DevOps Server/Services (former TFS/VSTS)</description>
+  <configure>ec_config</configure>
+  <pluginWizardBased>false</pluginWizardBased>
+  <depends min="1.4.1">EC-PluginManager</depends>
+  <help>help.xml</help>
+<hasAdoc>true</hasAdoc>
+
+<detailedDescription>This plugin integrates CloudBees CD with both Azure DevOps Services (previously known as VSTS) and Azure DevOps Server (previously known as TFS).</detailedDescription>
+<catalogLabel>Azure DevOps Services</catalogLabel>
+</plugin>

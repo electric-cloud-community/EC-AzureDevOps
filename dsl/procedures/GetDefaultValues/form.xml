@@ -1,0 +1,60 @@
+<editor>
+<help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-azuredevops#GetDefaultValues</help>
+<formElement>
+  <documentation>Previously defined plugin configuration.</documentation>
+  <label>Configuration:</label>
+  <property>config</property>
+  <configuration>1</configuration>
+  <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+  <required>1</required>
+  <type>entry</type>
+</formElement>
+<formElement>
+  <documentation>Name or ID of a team project where the work item type is defined.</documentation>
+  <label>Project:</label>
+  <property>project</property>
+  <required>1</required>
+  <type>entry</type>
+  <value/>
+</formElement>
+<formElement>
+  <documentation>Name of the work item type. Example: 'Feature', 'Bug'</documentation>
+  <htmlDocumentation>Name of the work item type.<br/> Example: <b>Feature</b>, <b>Bug</b></htmlDocumentation>
+  <label>Work Item Type:</label>
+  <property>workItemType</property>
+  <required>1</required>
+  <type>select</type>
+  <option><name>Bug</name><value>Bug</value></option>
+  <option><name>Epic</name><value>Epic</value></option>
+  <option><name>Feature</name><value>Feature</value></option>
+  <option><name>Issue</name><value>Issue</value></option>
+  <option><name>User Story</name><value>User Story</value></option>
+  <option><name>Task</name><value>Task</value></option>
+  <defaultValue>Bug</defaultValue>
+</formElement>
+<formElement>
+  <documentation>Results will be saved into this property/property sheet.</documentation>
+  <label>Result Property Sheet:</label>
+  <property>resultPropertySheet</property>
+  <required>1</required>
+  <type>entry</type>
+  <value>/myJob/defaultValues</value>
+</formElement>
+<formElement>
+  <documentation>Format to save the request results.</documentation>
+  <label>Result Format:</label>
+  <option>
+    <name>Property Sheet</name>
+    <value>propertySheet</value>
+  </option>
+  <option>
+    <name>JSON</name>
+    <value>json</value>
+  </option>
+  <property>resultFormat</property>
+  <value>propertySheet</value>
+  <required>1</required>
+  <type>select</type>
+</formElement>
+
+</editor>

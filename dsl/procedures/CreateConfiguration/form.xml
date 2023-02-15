@@ -1,0 +1,191 @@
+<!--
+
+     Copyright 2019 CloudBees, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+<editor>
+    <formElement>
+        <type>entry</type>
+        <label>Configuration:</label>
+        <property>config</property>
+        <required>1</required>
+        <documentation>Unique name for the plugin configuration.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Description:</label>
+        <property>desc</property>
+        <required>0</required>
+        <documentation>Description for the plugin configuration.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>AzureDevOps Server/Services Endpoint:</label>
+        <property>endpoint</property>
+        <required>1</required>
+        <documentation>AzureDevOps endpoint (https://dev.azure.com) or TFS server (scheme://server:port/tfs) URL.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Collection/Organization Name:</label>
+        <property>collection</property>
+        <required>1</required>
+        <value>DefaultCollection</value>
+        <documentation>If using TFS specify Collection else 'DefaultCollection' will be used. If using AzureDevOps specify Organization name.</documentation>
+        <htmlDocumentation>If using TFS specify Collection else '<i>DefaultCollection</i>' will be used. If using AzureDevOps specify Organization name.</htmlDocumentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Auth Type:</label>
+        <property>auth</property>
+        <required>1</required>
+        <value>basic</value>
+        <option>
+            <name>Basic Auth</name>
+            <value>basic</value>
+        </option>
+        <option>
+            <name>Personal Access Token (PAT)</name>
+            <value>pat</value>
+        </option>
+        <option>
+            <name>NTLM</name>
+            <value>ntlm</value>
+        </option>
+        <documentation>Select the type of authentication to use. Note: Some endpoints accept only PAT for authentication.</documentation>
+    </formElement>
+    <formElement>
+        <type>credential</type>
+        <label>Credentials:</label>
+        <property>credential</property>
+        <required>0</required>
+        <attachedAsParameterToStep>createAndAttachCredential</attachedAsParameterToStep>
+        <documentation>Username and password to connect to AzureDevOps Services.</documentation>
+        <dependsOn>auth</dependsOn>
+        <condition>${auth} == 'basic' || ${auth} == 'ntlm'</condition>
+    </formElement>
+    <formElement>
+        <type>credential</type>
+        <credentialType>secret</credentialType>
+        <label>Access Token:</label>
+        <property>token_credential</property>
+        <required>0</required>
+        <userNameLabel>Any value here (for the backward compatibility)</userNameLabel>
+        <passwordLabel>Paste the token</passwordLabel>
+        <retypePasswordLabel>Paste the token again</retypePasswordLabel>
+        <attachedAsParameterToStep>createAndAttachCredential</attachedAsParameterToStep>
+        <documentation>You can generate one on the TFS/AzureDevOps side</documentation>
+        <htmlDocumentation><a href="https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/pats?view=azure-devops" target="_blank">You can generate one on the TFS/AzureDevOps side</a></htmlDocumentation>
+        <dependsOn>auth</dependsOn>
+        <condition>${auth} == 'pat'</condition>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <required>0</required>
+        <label>Check Connection?:</label>
+        <checkedValue>1</checkedValue>
+        <uncheckedValue>0</uncheckedValue>
+        <property>checkConnection</property>
+        <documentation>If checked, the credentials will be checked before the configuration is saved.</documentation>
+        <value>0</value>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <documentation>Specify the TFS API version. For AzureDevOps, use the latest one. For TFS Server, refer to the version table in Supported Version section.</documentation>
+        <label>TFS API Version:</label>
+        <property>apiVersion</property>
+        <required>1</required>
+        <option>
+            <name>5.0</name>
+            <value>5.0</value>
+        </option>
+        <option>
+            <name>4.1</name>
+            <value>4.1</value>
+        </option>
+        <option>
+            <name>4.0</name>
+            <value>4.0</value>
+        </option>
+        <option>
+            <name>3.2</name>
+            <value>3.2</value>
+        </option>
+        <option>
+            <name>3.1</name>
+            <value>3.1</value>
+        </option>
+        <option>
+            <name>3.0</name>
+            <value>3.0</value>
+        </option>
+        <option>
+            <name>2.3</name>
+            <value>2.3</value>
+        </option>
+        <option>
+            <name>2.2</name>
+            <value>2.2</value>
+        </option>
+        <option>
+            <name>2.1</name>
+            <value>2.1</value>
+        </option>
+        <option>
+            <name>2.0</name>
+            <value>2.0</value>
+        </option>
+        <value>5.0</value>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Log Level:</label>
+        <property>debugLevel</property>
+        <required>0</required>
+        <value>0</value>
+        <option>
+            <value>0</value>
+            <name>Info</name>
+        </option>
+        <option>
+            <value>1</value>
+            <name>Debug</name>
+        </option>
+        <option>
+            <value>2</value>
+            <name>Trace</name>
+        </option>
+        <documentation>This option sets debug level for logs. If info is selected, only summary information will be show, for debug, there will be some debug information and for trace the whole requests and responses will be shown.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>HTTP Proxy:</label>
+        <property>http_proxy</property>
+        <value/>
+        <documentation>A proxy that should be used for connections.</documentation>
+        <required>0</required>
+    </formElement>
+    <formElement>
+        <type>credential</type>
+        <label>Proxy Authorization:</label>
+        <property>proxy_credential</property>
+        <userNameLabel>Proxy username:</userNameLabel>
+        <passwordLabel>Proxy password:</passwordLabel>
+        <retypePasswordLabel>Retype Proxy password:</retypePasswordLabel>
+        <required>0</required>
+        <documentation>Username and password for proxy.</documentation>
+        <attachedAsParameterToStep>createAndAttachCredential</attachedAsParameterToStep>
+    </formElement>
+</editor>

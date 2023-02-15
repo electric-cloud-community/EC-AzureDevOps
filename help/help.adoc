@@ -1,0 +1,386 @@
+
+Plugin version @PLUGIN_VERSION@
+
+Revised on November 30, 2022
+
+[NOTE]
+====
+In effort to streamline workflows and improve user experience, CloudBees will be phasing out EC-AzureDevops in favor of a new Azure DevOps CLI plugin. The phase-out will start with the CloudBees CD/RO 10.11 release, where we will stop providing new feature support and patches for EC-AzureDevops. The Azure DevOps CLI plugin will be released shortly after.
+
+We suggest you transition from using EC-Azure and EC-AzureDevops to Azure-CLI as soon as it is available to maintain new feature support and patch integration.
+====
+
+== Supported versions
+
+The following table provides the Microsoft AzureDevOps Services and TFS versions tested with this plugin and also the corresponding API version that should be used when performing the plugin configuration (refer to separate section which describes plugin configuration below).
+
+[cols=",,",options="header",]
+|===
+|Product Name |Product Version |API Version
+|AzureDevOps |- |5.0
+|TFS 2018 Update 2/3 |16.131 |4.1
+|TFS 2018 Update RTW/1 |16.122 |4.0
+|TFS 2017 Update 2 |15.117 |3.2
+|TFS 2017 Update 1 |15.112 |3.1
+|TFS 2017 RTW |15.105 |3.0
+|TFS 2015 Update 4 |14.114 |2.3
+|TFS 2015 Update 3 |14.102 |2.3
+|TFS 2015 Update 2 |14.95 |2.2
+|TFS 2015 Update 1 |14.0 |2.1
+|TFS 2015 RTW |14.0 |2.0
+|===
+
+[[CreateConfiguration]]
+
+
+== Plugin configurations
+
+Plugin configurations are sets of parameters that apply across some or all of the plugin procedures. They reduce repetition of common values, create predefined parameter sets for end users, and securely store credentials where needed. Each configuration is given a unique name that is entered in designated parameters on procedures that use them.
+
+
+== Creating plugin configurations
+
+To create plugin configurations in {CD}, do these steps:
+
+Go to *Administration* > *Plugins* to open the Plugin Manager.
+
+Find the EC-AzureDevOps-@PLUGIN_VERSION@ row.
+
+Click *Configure* to open the Configurations page.
+
+Click *Create Configuration* as per the description of parameters below.
+
+*Note:* As mentioned in the Known Issues section Basic authentication method does not work in certain cases. In such cases it is recommended you https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/pats?view=azdevops[create a Personal Access Token (PAT)] and use the PAT authorization method.
+
+== Configuration procedure parameters
+
+[cols=",",options="header",]
+|===
+|Parameter |Description
+|Configuration |Unique name for the plugin configuration.
+|Description |Description for the plugin configuration.
+|AzureDevOps Server/Services Endpoint |AzureDevOps endpoint (https://dev.azure.com) or TFS server (scheme://server:port/tfs) URL.
+|Collection/Organization Name |If using TFS specify Collection else '_DefaultCollection_' will be used. If using AzureDevOps specify Organization name.
+|Auth Type |Select the type of authentication to use. Note: Some endpoints accept only PAT for authentication.
+|Credentials |Username and password to connect to AzureDevOps Services.
+|Access Token |https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/pats?view=azure-devops[You can generate one on the TFS/AzureDevOps side]
+|Check Connection? |If checked, the credentials will be checked before the configuration is saved.
+|TFS API Version |Specify the TFS API version. For AzureDevOps, use the latest one. For TFS Server, refer to the version table in Supported Version section.
+|Log Level |This option sets debug level for logs. If info is selected, only summary information will be show, for debug, there will be some debug information and for trace the whole requests and responses will be shown.
+|HTTP Proxy |A proxy that should be used for connections.
+|Proxy Authorization |Username and password for proxy.
+|===
+
+image::cloudbees-common::cd-plugins/ec-azuredevops/createconfiguration.png[image]
+
+[[procedures]]
+== Plugin procedures
+
+*IMPORTANT* Note that the names of Required parameters are marked in [.required]#bold italics# in the parameter description table for each procedure.
+
+[[CreateWorkItems]]
+=== CreateWorkItems
+
+This procedure creates one or multiple new work items. In order to facilitate creation of multiple Work Items the parameters Work Items JSON is provided to specify Multiple Work items.
+
+In order to facilitate creation of multiple Work Items the parameters Work Items JSON is provided to specify Multiple Work items.
+
+==== CreateWorkItems parameters
+
+[cols=",",options="header",]
+|===
+|Parameter |Description
+|Configuration |Previously defined plugin configuration.
+|Title |Short description of the work item.
+|Project name |Name or ID of a https://docs.microsoft.com/uk-ua/rest/api/azure/devops/wit/?view=azure-devops-rest-4.1[team project] where the work item should be created.
+|Type |Name of the https://docs.microsoft.com/uk-ua/rest/api/azure/devops/wit/?view=azure-devops-rest-4.1[work item type].
+|Priority |Priority for completing the work item, based on business goals. Parameter should contain a number
+|Assign To |The person currently assigned to the work item. The value can contain an email or a fully specified name of an assignee
+|Description |Description for the work item. Will be rendered as HTML in the AzureDevOps/TFS UI. This field will not be shown in the TFS UI if the work item type is 'Bug'.
+|Repro Steps |Steps to reproduce the bug. Will be rendered as HTML in the AzureDevOps/TFS UI. This field will not be shown in the TFS UI unless the work item type is 'Bug'.
+|System Info |Environment information for the created bug. Will be rendered as HTML in the AzureDevOps/TFS UI. This field will not be shown in the TFS UI unless the work item type is 'Bug'.
+|Work Items JSON |Use this parameter if you need to create multiple work items and use the JSON convention to enter their information, like in this example.
+
+
+*[{"Title": "Title for the first work item", "Type": "Task", "Priority": 2}, {"Title": "Title for the second work item", "Priority": 2}]*
+|Additional Fields |Use this parameter to specify values beyond the named parameters. This an advanced usage field, please refer to the "Usage Example" below or the https://docs.microsoft.com/uk-ua/rest/api/azure/devops/wit/work%20items/update?view=azure-devops-rest-4.1#examples[Azure DevOps documentation.]
+|Result Format |Format to save the request results.
+|Result Property Sheet |Results will be saved into this property/property sheet. Property 'workItemIds' under the result property sheet will contain IDs for the created work items.
+|===
+
+==== Usage example:
+
+image::cloudbees-common::cd-plugins/ec-azuredevops/createworkitems.png[image]
+
+[[QueryWorkItems]]
+=== QueryWorkItems
+
+Queries work items and saves them under the specified property.
+
+The fields retrieved for each Work Item is based either on the fields contained in the definition of either the Query ID or the WIQL as the case may be.
+
+==== QueryWorkItems parameters
+
+[width="100%",cols="50%,50%",options="header",]
+|===
+|Parameter |Description
+|Configuration |Previously defined plugin configuration.
+|Project |Filter the results to this team project. If your query string uses the @project macro (e.g. '[System.TeamProject] = @project'), you must specify the project.
+|Query ID |Specify a Query ID.
+
+Use this parameter only if not specifying Query Text.
+|Query Text |Specify a WIQL or Query ID.
+
+Use this parameter only if not specifying Query ID.
+|Time precision |If checked, time precision (HH:MM:SS) is allowed in the date time comparisons.
+|Result Format |Format to save the request results.
+|Result Property Sheet |Results will be saved into this property/property sheet.
+|===
+
+==== Usage Example:
+
+image::cloudbees-common::cd-plugins/ec-azuredevops/queryworkitems.png[image]
+
+[[GetWorkItems]]
+=== GetWorkItems
+
+Retrieves work items based on specified IDs. The fields per work item are returned based on a specified list. This procedure allows you to retrieve the specified fields per work item (or list of basic fields if no field is specified).
+
+The fields per work item are returned based on a specified list. This procedure allows you to retrieve the specified fields per work item (or all if no field is specified). You can also specify *As of (date)* parameter as a UTC date time string (_2019-01-15T13:45:30_) to get all work items as they existed at that time.
+
+==== GetWorkItems parameters
+
+[width="100%",cols="50%,50%",options="header",]
+|===
+|Parameter |Description
+|Configuration |Previously defined plugin configuration.
+|Work Item IDs |A comma-separated list of up to 200 Work Item IDs.
+|Only Fields |Specify comma-separated list of fields (as per example below) that need to be retrieved per work item.
+
+If this parameter is left empty all fields will be returned.
+
+Example: *'System.State, System.IterationPath, Microsoft.VSTS.Common.StateChangeDate, Microsoft.VSTS.Common.Priority'*. Refer to link:#[https://dev.azure.com/\{yourOrganizationName}/_apis/wit/fields] to see all the available fields.
+
+This parameter cannot be specified with the "Expand Relationships" parameter.
+|As of (date) |UTC date time string (_2019-01-15T13:45:30_). Gets the work items as they existed at this time.
+|Expand Relationships |Gets work item relationships (work item links, hyperlinks, file attachements, etc.). This parameter cannot be specified with the *"Only Fields"*.
+
+*Some of the types were introduced in newer TFS APIs.*
+|Result Property Sheet |Results will be saved into this property/property sheet.
+|Result Format |Format to save the request results.
+|===
+
+==== Usage example:
+
+*Work Item ID(s)* field here refers the result of the CreateWorkItems procedure, you can use the comma-separated numeric values instead.
+
+image::cloudbees-common::cd-plugins/ec-azuredevops/getworkitems.png[image]
+
+[[UpdateWorkItems]]
+=== UpdateWorkItems
+
+Updates field values for one or more Work Items based on specified ids.
+
+==== UpdateWorkItems parameters
+
+[width="100%",cols="50%,50%",options="header",]
+|===
+|Parameter |Description
+|Configuration |Previously defined plugin configuration.
+|Work Item ID(s) |ID(s) of the work items to be updated.
+|Title |New title for the work item(s) to be updated.
+|Priority |New priority for the work item(s) to be updated.
+
+Priority refers to completing the work item, based on business goals. This field should contain a number.
+|Assign to |The new person to be assigned for the work item(s) to be updated.
+
+The value can contain an email or a fully specified name of an assignee.
+|Description |New description for the work item. Will be rendered as HTML in the AzureDevOps/TFS UI.
+|Comment Body |Comment with given text will be added to the work item(s).
+|Additional Fields |Additional fields to be added as a JSON array. This an advanced usage field, please refer to the "Usage Example" at the procedure's help or the https://docs.microsoft.com/uk-ua/rest/api/azure/devops/wit/work%20items/update?view=azure-devops-rest-4.1#examples[Azure DevOps documentation] for the examples.
+|Result Format |Format to save the request results.
+|Result Property Sheet |Updated items will be saved into this property/property sheet.
+|===
+
+==== Usage Example:
+
+*Work Item ID(s)* field here refers the result of the CreateWorkItems procedure, you can use the comma-separated numeric values instead.
+
+image::cloudbees-common::cd-plugins/ec-azuredevops/updateworkitems.png[image]
+
+[[DeleteWorkItems]]
+=== DeleteWorkItems
+
+Deletes the specified work items.
+
+==== DeleteWorkItems parameters
+
+[cols=",",options="header",]
+|===
+|Parameter |Description
+|Configuration |Previously defined plugin configuration.
+|Work Item ID(s) |ID(s) of the work item to delete.
+|Result Format |Format to save the request results.
+|Result Property Sheet |Deleted items will be saved into this property/property sheet.
+|===
+
+==== Usage Example:
+
+*Work Item ID(s)* field here refers the result of the CreateWorkItems procedure, you can use the comma-separated numeric values instead.
+
+image::cloudbees-common::cd-plugins/ec-azuredevops/deleteworkitems.png[image]
+
+[[UploadWorkItemAttachment]]
+=== UploadWorkItemAttachment
+
+Use this procedure to upload an attachment to a Work item.
+
+==== UploadWorkItemAttachment parameters
+
+[width="100%",cols="50%,50%",options="header",]
+|===
+|Parameter |Description
+|Configuration |Previously defined plugin configuration.
+|Work Item ID |ID of the work item.
+|Attachment Filename |The name of the file in the Attachment store.
+
+For example the uploaded file /var/tmp/foobar.txt as in File Path could be called as Information.txt in the Attachment store.
+|File Path |Absolute Path to the file to be uploaded. For example /var/tmp/info.txt
+
+Either this parameter or the "File Content" parameter is Required.
+|File Content |Enter the File content to be uploaded in this text area up to a limit of 64KB.
+
+Either this parameter or the "File Path" parameter is Required.
+|Comment |Comment for the attachment.
+|Upload Type |Use chunked upload type for uploading large files (>130 MB).
+|Result Format |Format to save the request results.
+|Result Property Sheet |Result will be saved into this property/property sheet.
+|===
+
+==== Usage Example:
+
+image::cloudbees-common::cd-plugins/ec-azuredevops/uploadworkitemattachment.png[image]
+
+[[GetDefaultValues]]
+=== GetDefaultValues
+
+Use this procedure to retrieve default values of a specified work item type from a Project .
+
+==== GetDefaultValues parameters
+
+[width="100%",cols="50%,50%",options="header",]
+|===
+|Parameter |Description
+|Configuration |Previously defined plugin configuration.
+|Project |Name or ID of a team project where the work item type is defined.
+|Work Item Type |Name of the work item type.
+
+Example: *Feature*, *Bug*
+|Result Property Sheet |Results will be saved into this property/property sheet.
+|Result Format |Format to save the request results.
+|===
+
+==== Usage Example:
+
+image::cloudbees-common::cd-plugins/ec-azuredevops/getdefaultvalues.png[image]
+
+[[TriggerBuild]]
+=== TriggerBuild
+
+This procedure triggers and queues a build based on the build definition and Queue name respectively.
+
+==== TriggerBuild parameters
+
+[width="100%",cols="50%,50%",options="header",]
+|===
+|Parameter |Description
+|Configuration |Previously defined plugin configuration.
+|Project |Team project ID or name.
+|Definition ID or name |The ID or the name of the Build Definition.
+|Queue ID or Name |The ID or the name of the queue. If not specified, the default queue for the definition will be used.
+|Source branch |The name of the branch from which to build.
+
+If not specified, the default branch for the definition will be used.
+|Parameters |Parameters to pass to the build specified as name-value pairs, with 1 pair per line.
+
+If not specified, the default variables for the definition will be used.
+
+Example:
+
+*system.debug=true*
+
+*BuildConfiguration=debug*
+
+*BuildPlatform=x64*
+|Result Property Sheet |Results will be saved into this property/property sheet.
+|Result Format |Format to save the request results.
+|===
+
+==== Usage Example:
+
+image::cloudbees-common::cd-plugins/ec-azuredevops/triggerbuild.png[image]
+
+[[GetBuild]]
+=== GetBuild
+
+Retrieves the build info of a specific build.
+
+==== GetBuild parameters
+
+[width="100%",cols="50%,50%",options="header",]
+|===
+|Parameter |Description
+|Configuration |Previously defined plugin configuration.
+|Project |ID or name of the team project.
+|Build ID or Number |ID or number of the build. For example '20190110.1' or '26'
+
+You could specify the wild-card pattern 2019* to get the latest build that starts with 2019.
+|Build Definition Name |Name for the Build Definition. This parameter is required if you've specified Build number in a "Build Id or Number" parameter as it is used for the Build search.
+|Wait for Build |If checked, the procedure will wait until the build is finished or until the wait time exceeds the value specified in the Wait Timeout, whichever is earlier.
+|Wait Timeout |Timeout in seconds to wait for build to finish. Will be used if "Wait for build" is checked. Default waiting time is 300 secs.
+|Result Format |Format to save the request results.
+|Result Property Sheet |Results will be saved into this property/property sheet.
+|===
+
+==== Usage Example:
+
+image::cloudbees-common::cd-plugins/ec-azuredevops/getbuild.png[image]
+
+[[knownIssues]]
+== Known issues
+
+AzureDevOps Services and some of the TFS Servers (default depends of the version), does not accept clear password for the *Basic* authentication method. You should https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/pats?view=azdevops[create a Personal Access Token (PAT)] and use it instead of a password.
+
+Uploading Attachments in the "Chunked" mode when using NTLM authentication via proxied connection may fail if proxy server closes connection after a POST request without a response content.
+
+[[AzureDevOpsNativeExtensionPlugin]]
+== AzureDevOps native extension plugin
+
+{CD} has a Native Extension plugin available in the AzureDevOps Marketplace which can perform build tasks (such as Publish Artifact, Run Pipeline etc.,) in {CD} as post build actions to TFS builds. Refer to https://marketplace.visualstudio.com/items?itemName=ElectricCloud.electric-flow[this link] for more details.
+
+[[releaseNotes]]
+== Release notes
+
+=== EC-AzureDevOps 1.0.6
+
+* The documentation has been migrated to the main documentation site.
+
+=== EC-AzureDevOps 1.0.4
+
+* Renaming to "{CD}".
+
+=== EC-AzureDevOps 1.0.3
+
+* Incorrect error message that sometimes appeared during configuration creation was removed.
+
+=== EC-AzureDevOps 1.0.2
+
+* Renaming to "CloudBees".
+
+=== EC-AzureDevOps 1.0.1
+
+* The plugin documentation has been updated.
+
+=== EC-AzureDevOps 1.0.0
+
+* Initial release.

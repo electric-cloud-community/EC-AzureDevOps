@@ -1,0 +1,76 @@
+<editor>
+    <help>https://docs.cloudbees.com/docs/cloudbees-cd/latest/plugins/ec-azuredevops#QueryWorkItems</help>
+    <formElement>
+        <documentation>Previously defined plugin configuration.</documentation>
+        <label>Configuration:</label>
+        <configuration>1</configuration>
+        <property>config</property>
+        <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+        <required>1</required>
+        <type>entry</type>
+    </formElement>
+    <formElement>
+        <htmlDocumentation>Filter the results to this team project. If your query string uses the @project macro (e.g. '[System.TeamProject] = @project'), you must specify the project.</htmlDocumentation>
+        <documentation>Filter the results to this team project. If your query string uses the @project macro (e.g. <b>'[System.TeamProject] = @project'</b>), you must specify the project.</documentation>
+        <label>Project:</label>
+        <property>project</property>
+        <required>0</required>
+        <type>entry</type>
+        <value/>
+    </formElement>
+    <formElement>
+        <htmlDocumentation>Specify a Query ID. <br/> Use this parameter only if not specifying Query Text.</htmlDocumentation>
+        <label>Query ID:</label>
+        <property>queryId</property>
+        <required>0</required>
+        <type>entry</type>
+        <value/>
+    </formElement>
+    <formElement>
+        <htmlDocumentation>Specify a WIQL or Query ID. <br/> Use this parameter only if not specifying Query ID.</htmlDocumentation>
+        <label>Query Text:</label>
+        <property>queryText</property>
+        <required>0</required>
+        <type>textarea</type>
+        <value/>
+    </formElement>
+    <formElement>
+        <checkedValue>true</checkedValue>
+        <documentation>If checked, time precision (HH:MM:SS) is allowed in the date time comparisons.</documentation>
+        <label>Time precision:</label>
+        <property>timePrecision</property>
+        <required>0</required>
+        <type>checkbox</type>
+        <uncheckedValue>0</uncheckedValue>
+        <checkedValue>1</checkedValue>
+        <value>0</value>
+    </formElement>
+    <formElement>
+        <documentation>Format to save the request results.</documentation>
+        <label>Result Format:</label>
+        <option>
+            <name>Property Sheet</name>
+            <value>propertySheet</value>
+        </option>
+        <option>
+            <name>JSON</name>
+            <value>json</value>
+        </option>
+        <option>
+            <name>Do not save the result</name>
+            <value>none</value>
+        </option>
+        <property>resultFormat</property>
+        <value>propertySheet</value>
+        <required>1</required>
+        <type>select</type>
+    </formElement>
+    <formElement>
+        <documentation>Results will be saved into this property/property sheet.</documentation>
+        <label>Result Property Sheet:</label>
+        <property>resultPropertySheet</property>
+        <required>1</required>
+        <type>entry</type>
+        <value>/myJob/queryWorkItems</value>
+    </formElement>
+</editor>
