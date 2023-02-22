@@ -34,7 +34,7 @@ repositories {
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.5:indy'
     compile 'org.spockframework:spock-core:1.1-groovy-2.4'
-    compile 'com.electriccloud:commander-spec-tests:latest.release'
+    compile 'com.electriccloud:commander-spec-tests:2023.04.0-SNAPSHOT'
     compile 'com.jayway.restassured:rest-assured:2.4.0'
     compile 'com.electriccloud:ec-specs-plugins-core:1.7.0'
 
