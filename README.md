@@ -123,19 +123,6 @@ create predefined parameter sets for end users, and securely store
 credentials where needed. Each configuration is given a unique name that
 is entered in designated parameters on procedures that use them.
 
-# Creating plugin configurations
-
-To create plugin configurations in CloudBees CD/RO, do these steps:
-
-Go to **Administration** &gt; **Plugins** to open the Plugin Manager.
-
-Find the <EC-AzureDevOps-@PLUGIN_VERSION>@ row.
-
-Click **Configure** to open the Configurations page.
-
-Click **Create Configuration** as per the description of parameters
-below.
-
 **Note:** As mentioned in the Known Issues section Basic authentication
 method does not work in certain cases. In such cases it is recommended
 you [create a Personal Access Token
